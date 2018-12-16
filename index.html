@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>ალტერნატიული პენსიის კალკულატორი</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/popper.js@1.14.6/dist/umd/popper.min.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script -->
+
+    <!-- offline version -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+
+    <link rel="stylesheet" href="style/font-awesome.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="style/bootstrap.min.css" />
+    <script src="js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="style/slick.css" />
+    <link rel="stylesheet" type="text/css" href="style/slick-theme.css" />
+    <script type="text/javascript" src="js/slick.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body class="bg-light">
+
+    <nav class="navbar-light bg-white">
+        <h4 class="pl-4 pt-4">მოითხოვე სამართლიანი პენსია</h4>
+        <h6 class="px-4 pb-4">საბაზისო + სოლიდარული + ინდივიდუალური = პენსია</h6>
+    </nav>
+
+
+    <div id="home" class="px-5 py-4">
+        <div class="text-center text-white">
+            <form id="calculator" class="form-horizontal">
+                <div class="row bg-info">
+
+                    
+                    <div class="col-12 col-sm-4 order-1 order-sm-1 border">
+                        <!-- Pillar I -->
+                        <div class="p-4">
+                            <p class="lead">I სვეტი</p>
+                            <p>საბაზისო</p>
+                        </div>
+                        <div class="form-group">
+                            <div class="text-left p-1">რამდენი წლის შემდეგ გადიხართ პენსიაზე? <!-- span> (მძიმე და მავნე პირობებში დასაქმებულ პირებს უფლება აქვთ 5 წლით ადრე გავიდნენ პენსიაზე) </span --></div>
+                            <div class="input-postfix">
+                                <input type="number" id="years-till-pension" name="years-till-pension" class="form-control" value="20" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="text-left p-1">მძიმე და მავნე პირობებში დასაქმებული პირი</div>
+                            <select class="form-control" id="monthlyContribution">
+                                <option class="bg-light" value="0">არა</option>
+                                <option class="bg-light" value="1">კი</option>
+                            </select>
+                        </div>
+                        <!--div class="form-check text-left">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">მძიმე და მავნე პირობებში დასაქმების შემთხვევაში მონიშნეთ აქ
+                                (საპენსიო ასაკი: ქალი
+                                55-დან 60 წლამდე, კაცი 60-დან 65 წლამდე)</label>
+                        </div -->
+                        <!-- div class="form-group">
+                            <div class="text-left p-1">სქესი</div>
+                            <select class="form-control" id="userPensionAge">
+                                <option class="bg-light" value="60">ქალი (საპენსიო ასაკი 60 წელი)</option>
+                                <option class="bg-light" value="65">კაცი (საპენსიო ასაკი 65 წელი)</option>
+                            </select>
+                        </div -->
+                    </div>
+
+
+                    <div class="col-12 col-sm-4 order-3 order-sm-2 border">
+                        <!-- Pillar II -->
+                        <div class="p-4">
+                            <p class="col lead">II სვეტი</p>
+                            <p>სოლიდარული</p>
+                        </div>
+                        <div class="form-group">
+                            <div class="text-left p-1">ხელფასი (ხელზე)</div>
+                            <div class="input-postfix input-gel">
+                                <input type="number" min="0" id="wage" name="wage" class="form-control" value="1000" />
+                            </div>
+                            <div class="text-left">
+                                <small id="real-wage-label">
+                                    დარიცხული:
+                                </small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="text-left p-1">საპენსიო შენატანების ხანგრძლივობა (წელი)</div>
+                            <div class="input-postfix">
+                                <input type="number" min="0" id="years-worked" name="yearcount" class="form-control" value="20" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-12 col-sm-4 order-5 order-sm-3 border">
+                        <!-- Pillar III -->
+                        <div class="p-4">
+                            <p class="col lead">III სვეტი</p>
+                            <p>ინდივიდუალური</p>
+                        </div>
+                        <div class="form-group">
+                            <div class="text-left p-1">ყოველთვიური საპენსიო შენატანი (მინ 2%)</div>
+                            <!-- select class="form-control" id="monthlyContribution">
+                                <option id="monthlyContribution0" class="bg-light" value="0.02">20₾ (2%)</option>
+                                <option id="monthlyContribution1" class="bg-light" value="0.04">40₾ (4%)</option>
+                                <option id="monthlyContribution2" class="bg-light" value="0.06">60₾ (6%)</option>
+                            </select -->
+                            <div class="input-postfix input-percent">
+                                <input type="number" min="2" id="monthlyContributionPercent" name="monthlyContributionPercent" class="form-control" value="2" />
+                            </div>
+                            <div class="text-left">
+                                <small id="individual-investment-gel-label">
+                                    ლარებში: 
+                                </small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="text-left p-1">განკარგვის დრო (წელი)</div>
+                            <div class="input-postfix">
+                                <input type="number" min="0" id="disposal" name="disposal" class="form-control" value="15" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="text-left p-1">საპროცენტო სარგებელი</div>
+                            <select class="form-control" id="interest">
+                                <!-- notice: inflation is 3% -->
+                                <option class="bg-light" value="1.03">3%</option>
+                                <option class="bg-light" value="1.05">5%</option>
+                                <option class="bg-light" value="1.07">7%</option>
+                            </select>
+                            <!-- input type="number" min="0" id="accPercent" name="accPercent" class="form-control" value="3" / -->
+                        </div>
+                    </div> 
+
+                <!-- /div>
+                <div class="row" -->
+                    
+                    <div class="col-12 col-sm-4 order-2 order-sm-4 border bg-success p-2">
+                        <div id="base-pension-lable">საბაზისო პენსია</div>
+                        <h5 id="calculator-result-base">200</h5>
+                    </div>
+                    <div class="col-12 col-sm-4 order-4 order-sm-5 border bg-success p-2">
+                        <div>სოლიდარული პენსია</div>
+                        <h5 id="calculator-result-solidarity">0</h5>
+                    </div>
+                    <div class="col-12 col-sm-4 order-5 order-sm-6 border bg-success p-2">
+                        <div>ინდივიდუალური პენსია</div>
+                        <h5 id="calculator-result-individual">0</h5>
+                    </div>
+
+                <!-- /div>
+                <div class="row" -->
+
+                    <div class="col-12 order-7 border bg-success p-2">
+                        <div class="row">
+                            <p class="col lead">ჯამში კუთვნილი პენსია:</p>
+                        </div>
+                        <div class="row">
+                            <h3 class="col" id="calculator-result"></h3>
+                        </div>
+                        <div class="text-center">
+                            <small id="total-pension-in-todays-value">
+                                დღევანდელი მსყიდველუნარიანობით:
+                            </small>
+                        </div>
+                        <div id="debug"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="howdoesitwork" class="py-5 text-white">
+        <div class="container text-center">
+            <h2 class="mb-5">როგორ მუშაობს?</h2>
+            <div class="row">
+                <div class="col p-1">
+                    <h4 class="py-4 bg-info">საპენსიო სისტემა</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 p-1">
+                    <div class="py-4 bg-info full-height">
+                        <h5>I სვეტი</h5>
+                        საბაზისო პენსია <br /><br />
+                        საბაზისო პენსია არის ფიქსირებული. საბაზისო პენსია ყოველ წელს ითვლება თავიდან ინფლაციის გათვალისწინებით.
+                    </div>
+                </div>
+                <div class="col-sm-4 p-1">
+                    <div class="py-4 bg-info full-height">
+                        <h5>II სვეტი</h5>
+                        თაობათა შორის სოლიდარობის სქემა<br /><br />
+                        დამსაქმებელის 2% + სახელმწიფოს 2%
+                    </div>
+                </div>
+                <div class="col-sm-4 p-1">
+                    <div class="py-4 bg-info full-height">
+                        <h5>III სვეტი</h5>
+                        კერძო დაგროვებითი<br /><br />
+                        დასაქმებულის 2%
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="py-5 text-white" id="slideshow">
+    <div class="container">
+        <h2 class="text-center mb-5">რა უპირატესობა აქვს ალტერნატიულ რეფორმას?</h2>
+        <div class="text-center">
+            <div id="slides">
+                <div><img class="slide" src="slides/1.png" alt="slide1"></div>
+                <div><img class="slide" src="slides/2.png" alt="slide2"></div>
+                <div><img class="slide" src="slides/3.png" alt="slide3"></div>
+                <div><img class="slide" src="slides/4.png" alt="slide4"></div>
+                <div><img class="slide" src="slides/5.png" alt="slide5"></div>
+                <div><img class="slide" src="slides/6.png" alt="slide6"></div>
+                <div><img class="slide" src="slides/7.png" alt="slide7"></div>
+                <div><img class="slide" src="slides/8.png" alt="slide8"></div>
+                <div><img class="slide" src="slides/9.png" alt="slide9"></div>
+                <div><img class="slide" src="slides/10.png" alt="slide10"></div>
+                <div><img class="slide" src="slides/11.png" alt="slide11"></div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div id="inflation" class="py-5 text-center">
+    <div class="container">
+        <h2 class="mb-5">კანონპროექტი</h2>
+        <a href="alternative-pension.pdf" target="_blank">ალტერნატიული პენსიის კანონპროექტი - ოფიციალური დოკუმენტი</a>
+    </div>
+    </div>
+
+    <footer class="container-fluid text-center bg-dark text-muted">
+        
+        <div class="row p-1 pl-4">
+            <a href="http://cssge.ge/"><img src="ebert.png" alt="Friedrich Ebert Foundation" style="height: 5rem;" /></a>
+        </div>
+        <div class="row p-1 pl-4">
+            <a href=""><img src="centerforsocialstudies.png" alt="Center for Social Studies" style="height: 3rem;" /></a>
+        </div>
+        <br />
+        <div class="row p-1 pl-4 text-left">
+            კვლევის ავტორები: ისოებ არჩვაძე, ბექა ნაცვლიშვილი <br />
+            ასისტენტები: თორნიკე ჩივაძე, ნინო შანიძე <br />
+            <br />
+            &copy ყველა უფლება დაცულია
+        </div>
+    </footer>
+
+    <script type="text/javascript">
+        $(document).ready(calc);
+        $('#years-till-pension').keyup(calc);
+        //$('#userPensionAge').change(calc);
+        $('#years-worked').keyup(calc);
+        $('#wage').keyup(calc);
+        //$('#monthlyContribution').change(calc);
+        $('#monthlyContributionPercent').keyup(calc);
+        $('#disposal').keyup(calc);
+        $('#interest').change(calc);
+
+        $('#years-till-pension').focus(scrollToHome);
+        $('#years-worked').focus(scrollToHome);
+        $('#wage').focus(scrollToHome);
+        //$('#monthlyContribution').focus(scrollToHome);
+        $('#disposal').focus(scrollToHome);
+        //$('#interest').focus(scrollToHome);
+
+        var inflationPerYear = 1.03; //3% inflation rate
+
+        function calc(){
+
+            // ------------ get input ------------
+
+            var currentYear = new Date().getFullYear();
+            var yearsTillPension = parseFloat($("#years-till-pension").val(), 10) || 0;
+            yearsTillPension = Math.max(yearsTillPension, 0);
+            //yearsTillPension += 1;
+            var yearsWorked = parseFloat($("#years-worked").val(), 10) || 0;
+
+            var wage = parseFloat($("#wage").val(), 10) || 0;
+            var wageReal = wage * 1.25;
+            var monthlyContributionPercent = parseFloat($("#monthlyContributionPercent").val(), 10) || 2;
+            if(monthlyContributionPercent < 2){
+                monthlyContributionPercent = 2;
+                $('#monthlyContributionPercent').val(monthlyContributionPercent);
+            }
+            monthlyContributionPercent /= 100;
+            var disposalYearsTillPension = parseFloat($("#disposal").val(), 10) || 0;
+            var interest = $("#interest")[0].value;
+
+            // ------------ do calculations ------------
+
+            var basePension = calcPillar1(yearsTillPension);
+            var solidarityPension = calcPillar2(yearsWorked, wageReal);
+            var individualPension = calcPillar3(yearsWorked, wageReal, monthlyContributionPercent, disposalYearsTillPension, interest);
+
+            var totalPension = basePension + solidarityPension + individualPension;
+            var totalPensionTodaysValue = getTodaysGelValue(totalPension, yearsTillPension);
+
+            basePension = Math.round(basePension * 100) / 100;
+            solidarityPension = Math.round(solidarityPension * 100) / 100;
+            individualPension = Math.round(individualPension * 100) / 100;
+            totalPension = Math.round(totalPension * 100) / 100;
+            totalPensionTodaysValue = Math.round(totalPensionTodaysValue * 100) / 100;
+
+            // ------------ display results ------------
+
+            //$('#debug').text("YearsTillPension: " + yearsTillPension + " addYearsTillPension: " + additionalYearsTillPension + " coeff: " + coeff + " inflation: " + inflation + " individual T: " + indTotal + " individual P: " + indPension);
+            
+            $('#basePension').text(basePension);
+            $('#base-pension-lable').text("საბაზისო პენსია (" + (currentYear + yearsTillPension) + " წელს)");
+            
+            $('#real-wage-label').text("დარიცხული: " + wageReal + " ₾");
+            $('#individual-investment-gel-label').text("ლარებში " + (monthlyContributionPercent * wageReal) + " ₾");
+
+            $('#calculator-result').text(totalPension + "₾");
+            $('#calculator-result-base').text(basePension + "₾");
+            $('#calculator-result-solidarity').text(solidarityPension + "₾");
+            $('#calculator-result-individual').text(individualPension + "₾");
+            $('#total-pension-in-todays-value').text("დღევანდელი მსყიდველუნარიანობით: " + totalPensionTodaysValue + "₾");
+        }
+
+        function calcPillar1(yearsTillPension){
+            var yearsTillPensionAfter2019 = new Date().getFullYear() - 2019;
+            pensionYear = yearsTillPensionAfter2019 + yearsTillPension;
+            
+            //base pension calculated with inflation + 1%
+            var interestPerYear = inflationPerYear + 0.01; //3% inflation rate + 1%
+            
+            //from 2019 it's going to be 200 gel by default
+            var basePension = Math.round(200 * Math.pow(interestPerYear, pensionYear) * 10) / 10;
+            basePension = Math.max(basePension, 200);
+
+            return basePension;
+        }
+        
+        function calcPillar2(yearsWorked, wageReal){
+            var additionalYearsWorked = getAdditionalYearsWorked(yearsWorked);
+            var totalYearsWorked = yearsWorked + additionalYearsWorked;
+
+            var coeff = getCoeff(wageReal);
+            var inflation = Math.pow(inflationPerYear + 0.01, yearsWorked);
+
+            var solidarityPension = totalYearsWorked * wageReal * coeff * inflation;
+            solidarityPension = Math.round(solidarityPension * 100) / 100;
+
+            return solidarityPension;
+        }
+
+        function calcPillar3(yearsWorked, wageReal, monthlyContributionPercent, disposalYearsTillPension, interest){
+            var monthlyContribution = wageReal * monthlyContributionPercent;
+            var realInterest = 1 + (interest - inflationPerYear); // e.g. 1 + (1.05 - 1.03) = 1.02
+            var totalInterest = Math.pow(realInterest * yearsWorked);
+
+            var total = monthlyContribution * yearsWorked * 12 * realInterest;
+            var individualPension = total / disposalYearsTillPension / 12;
+
+            return individualPension;
+        }
+
+        function getCoeff(wage){
+            var coeff = 0.8;
+            
+            if (wage < 600) coeff = 0.8;
+            else if (wage < 800) coeff = 0.7;
+            else if (wage < 1130) coeff = 0.65;
+            else if (wage < 1210) coeff = 0.6;
+            else if (wage < 1500) coeff = 0.58;
+            else if (wage < 1900) coeff = 0.56;
+            else if (wage < 2100) coeff = 0.55;
+            else if (wage < 2300) coeff = 0.54;
+            else if (wage < 2400) coeff = 0.52;
+            else if (wage < 2500) coeff = 0.5;
+            else if (wage < 3500) coeff = 0.48;
+            else if (wage < 4000) coeff = 0.47;
+            else if (wage >= 4000) coeff = 0.46;
+
+            return coeff * 0.01; //this is a percent
+        }
+
+        function getAdditionalYearsWorked(yearsWorked){
+            if(yearsWorked <= 0) return 0;
+            return Math.max(0, 10 - 0.5 * (yearsWorked - 1));
+        }
+
+        function getTodaysGelValue(totalPension, yearsTillPension){
+            return totalPension / Math.pow(inflationPerYear, yearsTillPension);
+        }
+
+        function scrollToHome() {
+            $('html,body').animate({
+                scrollTop: $("#home").offset().top
+            }, 500);
+        }
+
+        $('#slides').slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            autoplay: true,
+            autoplaySpeed: 4000,
+            speed: 1000,
+            arrows: false,
+            dots: true,
+            appendDots: $('#slides'),
+            fade: true,
+            lazyLoad: 'ondemand'
+        });
+    </script>
+</body>
+
+</html>
